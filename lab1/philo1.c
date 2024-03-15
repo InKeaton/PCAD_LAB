@@ -5,7 +5,7 @@
 
 #define NUMPHILO 5
 
-pthread_mutex_t mutexThread[NUMPHILO] = {PTHREAD_MUTEX_INITIALIZER, PTHREAD_MUTEX_INITIALIZER, PTHREAD_MUTEX_INITIALIZER, PTHREAD_MUTEX_INITIALIZER, PTHREAD_MUTEX_INITIALIZER};
+pthread_mutex_t mutexThread[NUMPHILO];
 int eat[NUMPHILO];
 
 void* Filosofo(void* i) {
@@ -29,8 +29,11 @@ void* Filosofo(void* i) {
 }
 int main(int arg, char** args) {
 	pthread_t philo[NUMPHILO];
-	int ar[NUMPHILO];
-	for(unsigned int i = 0; i < NUMPHILO; i++) { ar[i] = i; }
+	int ar[NUMPHILO]; 
+	for(unsigned int i = 0; i < NUMPHILO; i++) { 
+		pthread_mutex_init(&mutexThread[i], NULL);
+		ar[i] = i; 
+	}
 	for(unsigned int i = 0; i < NUMPHILO; i++) {
 		if(pthread_create(&philo[i], NULL, Filosofo,  &ar[i]) != 0) { return EXIT_FAILURE; 	}
 	}
