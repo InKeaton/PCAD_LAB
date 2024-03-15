@@ -9,7 +9,6 @@
  *	--VERSIONE DEL PROBLEMA DEI FILOSOFI SENZA DEADLOCK--
 */
 ////////////////////////////////////////////////////////////////////////////////////////////
-
 #define NUMPHILO 5
 
 struct Neighbor {
@@ -25,16 +24,25 @@ int eat[NUMPHILO];
 void* Filosofo(void* i) {
 	unsigned volatile int numPhi = *(int*) i;
 	for(int mangia = 0; mangia < NUMPHILO; mangia++) {
-		unsigned volatile int bSx, bDx = numPhi;
-		/*
+		//pre-protocollo
+		unsigned volatile int bSx, bDx = numPhi; 
+		bSx = (numPhi-1+NUMPHILO)%NUMPHILO;
 		bool eat = false;
+
 		while(!eat) {
 			pthread_mutex_lock(&neigh.neighborLock);
-
+				if(!neigh.array[bSx] && !neigh.array[bDx]) {
+					neigh.array[bSx] = 1;
+					neigh.array[bSx] = 1;
+					eat = 1;
+				}
 			pthread_mutex_unlock(&neigh.neighborLock);
+			if(!eat){ 
+				printf("%d | Sta pensando :////\n", numPhi);
+			}
 		}
-		*/
-		bSx = (numPhi-1+NUMPHILO)%NUMPHILO;
+	
+		//RACE MOMENT
 		printf("%d , %d | Cerco di prendere la bacchetta sinistra (%d) \n", numPhi, mangia, bSx);
 		pthread_mutex_lock(&mutexThread[bSx]);
 			printf("%d | Prendo la bacchetta sinistra (%d) \n", numPhi, bSx);
@@ -45,6 +53,12 @@ void* Filosofo(void* i) {
 				printf("%d | Finito di mangiare....... :))\n", numPhi);
 			pthread_mutex_unlock(&mutexThread[bDx]);
 		pthread_mutex_unlock(&mutexThread[bSx]);
+	
+		//post-protocollo
+		pthread_mutex_lock(&neigh.neighborLock);
+			neigh.array[bSx] = 0;
+			neigh.array[bSx] = 0;
+		pthread_mutex_unlock(&neigh.neighborLock);
 		printf("%d | Rilascio entrambe la bacchette :) \n", numPhi);
 	}
 
