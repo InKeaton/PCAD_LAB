@@ -6,7 +6,6 @@
 #define NUMPHILO 5
 
 pthread_mutex_t mutexThread[NUMPHILO];
-int eat[NUMPHILO];
 
 void* Filosofo(void* i) {
 	unsigned volatile int numPhi = *(int*) i;
