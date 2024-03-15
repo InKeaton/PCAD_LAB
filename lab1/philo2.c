@@ -24,7 +24,7 @@ int eat[NUMPHILO];
 
 void* Filosofo(void* i) {
 	unsigned volatile int numPhi = *(int*) i;
-	for(int mangia = 0; mangia <NUMPHILO; mangia++) {
+	for(int mangia = 0; mangia < NUMPHILO; mangia++) {
 		unsigned volatile int bSx, bDx = numPhi;
 		/*
 		bool eat = false;
