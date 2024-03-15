@@ -19,7 +19,6 @@ struct Neighbor {
 
 pthread_mutex_t mutexThread[NUMPHILO];
 struct Neighbor neigh;
-int eat[NUMPHILO];
 
 void* Filosofo(void* i) {
 	unsigned volatile int numPhi = *(int*) i;
