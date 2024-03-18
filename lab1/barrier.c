@@ -25,7 +25,7 @@ my_barrier m;
 
 void* prova() {
 	pthread_my_barrier_wait(&m);
-	printf("Ewwiwa :)))\n");
+	printf("Ho finito! :)))\n");
 }
 
 int main() {
