@@ -15,10 +15,12 @@ int my_sem_init(my_semaphore * ms, unsigned int v) {
 }
 
 int my_sem_wait(my_semaphore* ms) {
-	while(ms->V <= 0) {
-		pthread_cond_wait(&ms->varcond,	&ms->lock);
-	}
-	ms->V--;
+	pthread_mutex_lock(&ms->lock);
+		while(ms->V <= 0) {
+			pthread_cond_wait(&ms->varcond,	&ms->lock);
+		}
+		ms->V--;
+	pthread_mutex_unlock(&ms->lock);
 	return 0;
 }
 
