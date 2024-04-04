@@ -13,6 +13,11 @@ typedef struct {
 	pthread_cond_t 	journey_cond;
 } Bus;
 
+////////////////////////////////////////////////////////////////////////////////////////////
+/*	
+ *	--PROBLEMA DEL BUS CON VARIABILI CONDIZIONALI (BARRIER LIKE)--
+*/
+////////////////////////////////////////////////////////////////////////////////////////////
 
 int life_bus(Bus* b) {
 	pthread_mutex_lock(&b->bus_lock);
@@ -58,7 +63,7 @@ int enter_bus(Bus* b) {
 
 int main(int argc, char** args) {
 	const int n_pass = 10, c_posti = 5;
-	Bus* b;
+	Bus b;
 
-	init_bus(b, c_posti);
+	init_bus(&b, c_posti);
 }
