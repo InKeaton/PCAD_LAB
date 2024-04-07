@@ -5,16 +5,16 @@
 #include <stdbool.h>
 
 #define NUMPOSTIBUS  5
-#define NUMPASS 	  19
+#define NUMPASS 	 10
 
 typedef struct {
-	volatile unsigned int c_posti;			//indica il numero di posti presenti all'interno del bus
-	volatile unsigned int posti_presi;	//indica il numero di posti presi nel bus
-	volatile unsigned int up; 					//se il valore è maggiore di 0 si può salire nel bus sennò no
-	pthread_mutex_t bus_lock;						//lock utilizzato per modificare i campi presenti nella struct
-	pthread_cond_t 	exit_cond;					//cond variable utilizzata per tutti i thread che devono uscire dal bus
-	pthread_cond_t	enter_cond;					//cond variable utilizzata per tutti i thread che devono entrare nel bus
-	pthread_cond_t 	journey_cond;				//cond variable utilizzata per fare partire il viaggio sul bus
+	volatile unsigned int c_posti;			// indica il numero di posti presenti all'interno del bus
+	volatile unsigned int posti_presi;	    // indica il numero di posti presi nel bus
+	volatile unsigned int up; 			    // se il valore è maggiore di 0 si può salire nel bus sennò no
+	pthread_mutex_t bus_lock;				// lock utilizzato per modificare i campi presenti nella struct
+	pthread_cond_t 	exit_cond;				// cond variable utilizzata per tutti i thread che devono uscire dal bus
+	pthread_cond_t	enter_cond;				// cond variable utilizzata per tutti i thread che devono entrare nel bus
+	pthread_cond_t 	journey_cond;			// cond variable utilizzata per fare partire il viaggio sul bus
 } Bus;
 
 Bus b;
@@ -24,19 +24,23 @@ Bus b;
  *	--PROBLEMA DEL BUS CON VARIABILI CONDIZIONALI (BARRIER LIKE)--
 */
 ////////////////////////////////////////////////////////////////////////////////////////////
+
 int init_bus(Bus* b, unsigned int posti) {
 	/*
 	 * Funzione utilizzata per l'inizializzazione dei campi
 	 * presenti all'interno della struct bus
 	*/
-	if(posti == 0) return 1;
+	if(posti < 1) return 1;
+
 	b->c_posti = posti;
 	b->posti_presi = 0;
 	b->up = 1;
-	pthread_mutex_init(&b->bus_lock, NULL);
-	pthread_cond_init(&b->journey_cond, NULL);
-	pthread_cond_init(&b->enter_cond, NULL);
-	pthread_cond_init(&b->exit_cond, NULL);
+
+	pthread_mutex_init(&b->bus_lock,     NULL);
+	pthread_cond_init( &b->journey_cond, NULL);
+	pthread_cond_init( &b->enter_cond,   NULL);
+	pthread_cond_init( &b->exit_cond,    NULL);
+	
 	return 0;
 }
 
@@ -54,12 +58,14 @@ void* life_bus() {
 	 * un segnale in broadcast a tutti i thread che sono fermi sulla variabile
 	 * condizionale exit_cond per poi ricomniciare il tutto.
 	*/
-	while(true) {
+	for(int i = 0; i < 10; i++) {
 			pthread_cond_wait(&b.journey_cond, &b.bus_lock);
 			pthread_mutex_unlock(&b.bus_lock);
-			printf("Viaggio del bus iniziato\n");
-			sleep(3);
-			printf("Viaggio del bus finito\n");
+			printf("/////////////////////////////////////////////////////////////////////////////////////////////////\n");
+			printf("Viaggio %d del bus iniziato\n", i);
+			sleep(2);
+			printf("Viaggio %d del bus finito\n", i);
+			printf("/////////////////////////////////////////////////////////////////////////////////////////////////\n");
 			pthread_cond_broadcast(&b.exit_cond);
 	}
 }
@@ -89,6 +95,7 @@ void up_bus() {
 			b.up = 0;
 			pthread_cond_signal(&b.journey_cond);
 		}
+		pthread_cond_wait(&b.exit_cond, &b.bus_lock);
 
 	pthread_mutex_unlock(&b.bus_lock);
 }
@@ -103,12 +110,11 @@ void down_bus() {
 	 * stanno dormendo su enter_cond.
 	*/
 	pthread_mutex_lock(&b.bus_lock);
-			pthread_cond_wait(&b.exit_cond, &b.bus_lock);
-			b.posti_presi--;
-			if(b.posti_presi == 0) {
-				b.up = 1;
-				pthread_cond_broadcast(&b.enter_cond);
-			}
+		b.posti_presi--;
+		if(b.posti_presi == 0) {
+			b.up = 1;
+			pthread_cond_broadcast(&b.enter_cond);
+		}
 	pthread_mutex_unlock(&b.bus_lock);
 }
 
@@ -128,10 +134,10 @@ void* life_pass() {
 	 *	Viaggio del bus finito
 	 *	Con in mezzo degli: Addormentato su b.enter_cond
 	*/
-	while(true) {
+	for(int i = 0; i < 5; i++) {
 		up_bus();
 		down_bus();
-		sleep(10);
+		sleep(3);
 	}
 }
 
