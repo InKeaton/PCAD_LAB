@@ -4,8 +4,18 @@
 #include <pthread.h>
 #include <stdbool.h>
 
+//pre-processor variable define
+#ifndef NUMPOSTIBUS
 #define NUMPOSTIBUS  5
-#define NUMPASS 	 10
+#endif
+
+#ifndef NUMGIRI
+#define NUMGIRI 	 10
+#endif
+
+#define NUMPASS NUMPOSTIBUS*3
+#define NUMVIAGGI (NUMPOSTIBUS/NUMPASS) * NUMGIRI
+
 
 typedef struct {
 	volatile unsigned int c_posti;			// indica il numero di posti presenti all'interno del bus
@@ -58,13 +68,13 @@ void* life_bus() {
 	 * un segnale in broadcast a tutti i thread che sono fermi sulla variabile
 	 * condizionale exit_cond per poi ricomniciare il tutto.
 	*/
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i < NUMVIAGGI; i++) {
 			pthread_cond_wait(&b.journey_cond, &b.bus_lock);
 			pthread_mutex_unlock(&b.bus_lock);
 			printf("/////////////////////////////////////////////////////////////////////////////////////////////////\n");
-			printf("Viaggio %d del bus iniziato\n", i);
+			printf("Viaggio %d del bus iniziato\n", i+1);
 			sleep(2);
-			printf("Viaggio %d del bus finito\n", i);
+			printf("Viaggio %d del bus finito\n", i+1);
 			printf("/////////////////////////////////////////////////////////////////////////////////////////////////\n");
 			pthread_cond_broadcast(&b.exit_cond);
 	}
@@ -77,14 +87,14 @@ void up_bus() {
 	 * Appena entrati nella funzione devono aspettare di prendere il lock 
 	 * del bus e una volta preso se il valore di up non è a true vanno
 	 * in wait sulla variabile conzionale enter_cond.
-	 * Una volta svegliati su b.up sarà vero usciranno dal while incrementando 
+	 * Una volta svegliati su b.ups sarà vero usciranno dal while incrementando 
 	 * il numero di posti presi e se quel numero sarà uguale al numero di posti 
 	 * sul bus allora si rimetterà il valore di b.up a false e si invierà un segnale
 	 * al thread che è sulla variabile journey_cond (solo il bus).
 	*/
 	pthread_mutex_lock(&b.bus_lock);
 		while(!b.up) {
-				printf("Addormentato su b.enter_cond\n");
+		//		printf("Addormentato su b.enter_cond\n");
 				pthread_cond_wait(&b.enter_cond, &b.bus_lock);
 		}	
 
@@ -134,7 +144,7 @@ void* life_pass() {
 	 *	Viaggio del bus finito
 	 *	Con in mezzo degli: Addormentato su b.enter_cond
 	*/
-	for(int i = 0; i < 5; i++) {
+	for(int i = 0; i < NUMGIRI; i++) {
 		up_bus();
 		down_bus();
 		sleep(3);
@@ -146,7 +156,12 @@ int main(int argc, char** args) {
 	pthread_t pass_th[NUMPASS], bus_th;
 	init_bus(&b, NUMPOSTIBUS);
 
-	printf("%d\n", b.c_posti);
+	printf("Numero Posti: %d\n", NUMPOSTIBUS);
+	printf("Numero Passeggeri: %d\n", NUMPASS);
+	printf("Numero Viaggi per Passegger0: %d\n", NUMGIRI);
+	printf("Numero Viaggi Totali: %d\n", NUMVIAGGI);
+
+	sleep(2);
 	
 	pthread_create(&bus_th, NULL, life_bus, NULL);
 	for(int i = 0; i < NUMPASS; i++) {
