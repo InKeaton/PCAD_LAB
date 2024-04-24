@@ -151,6 +151,27 @@ void* life_pass() {
 	}
 }
 
+int destroy_bus(Bus* b) {
+	
+	if(pthread_cond_destroy(&b->journey_cond)) {
+		return 0;
+	}
+
+	if(pthread_cond_destroy(&b->exit_cond)) {
+		return 0;
+	}
+
+	if(pthread_cond_destroy(&b->enter_cond)) {
+		return 0;
+	}
+
+	if(pthread_mutex_destroy(&b->bus_lock)) {
+		return 0;
+	}
+	printf("Bus distrutto\n");
+	return 1;
+}
+
 
 int main(int argc, char** args) {
 	pthread_t pass_th[NUMPASS], bus_th;
@@ -172,4 +193,5 @@ int main(int argc, char** args) {
 	for(int i = 0; i < NUMPASS; i++) {
 		pthread_join(pass_th[i], NULL);
 	}
+	destroy_bus(&b);
 }
