@@ -13,8 +13,9 @@ public class RWexclusive extends RWbasic {
                 data = cache_data;
             }
         }
-        catch(Exception e){
-            e.printStackTrace();
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); 
+            System.err.println("Thread Interrupted");
         }
     }
 

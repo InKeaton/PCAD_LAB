@@ -22,8 +22,9 @@ public class RWbasic {
             Thread.sleep((int)(Math.random()*10));
             data = cache_data;
         }
-        catch(Exception e){
-            e.printStackTrace();
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); 
+            System.err.println("Thread Interrupted");
         }
     }
 }

@@ -1,7 +1,7 @@
 public class RWbasic {
 
     // Data stored by the object
-    private int data;
+    protected int data;
 
     // Constructor
     public RWbasic(){
