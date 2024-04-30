@@ -1,10 +1,10 @@
 public class Reader implements Runnable {
 
-    // RWbasic object to manage
-    private final RWbasic book;
+    // RWext object to manage
+    private final RWext book;
 
     // Constructor
-    public Reader(RWbasic new_book){
+    public Reader(RWext new_book){
         this.book = new_book;
     }
 

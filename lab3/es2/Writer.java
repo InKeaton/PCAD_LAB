@@ -1,10 +1,10 @@
 public class Writer implements Runnable {
 
-    // RWbasic object to manage
-    private final RWbasic book;
+    // RWexclusive object to manage
+    private final RWexclusive book;
     
     // Constructor
-    public Writer(RWbasic new_book){
+    public Writer(RWexclusive new_book){
         this.book = new_book;
     }
 
