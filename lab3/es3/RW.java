@@ -27,14 +27,12 @@ public class RW extends RWbasic {
 
     // Update data
     @Override public void write(){
-        try{
-            while(this.ready_to_update == false) {
-                synchronized(this) {
+        try {
+            synchronized(this) {
+                while(this.ready_to_update == false) {
                     wait();
                 }
-            }
-        
-            synchronized(this) {
+                
                 int cache_data = data;
                 cache_data++;
                 this.ready_to_update = false;
