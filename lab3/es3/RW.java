@@ -2,41 +2,34 @@ public class RW extends RWbasic {
     
     // Checks if it can be written
     private boolean ready_to_update; 
-
+		private static int n_lettori = 0;
     // Return data
     @Override public int read() {
-        try {
-            while(this.ready_to_update == true) {
-                synchronized(this) {
-                    wait();
-                }
-            }
+    	synchronized(this) {
+				RW.n_lettori++;
+			}
 
-            this.ready_to_update = true;
-            synchronized(this) {
-                notify();
-            }
-            return data;
-        } 
-        catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); 
-            System.err.println("Thread Interrupted");
-            return -1;
-        }
+	  	synchronized(this) {
+				RW.n_lettori--;
+				if(RW.n_lettori <= 0) {
+					notifyAll();
+				}
+			}			
+			return data;
     }
 
     // Update data
     @Override public void write(){
         try {
             synchronized(this) {
-                while(this.ready_to_update == false) {
+                while(RW.n_lettori > 0) {
                     wait();
                 }
                 
                 int cache_data = data;
                 cache_data++;
                 this.ready_to_update = false;
-                notify();
+                notifyAll();
                 data = cache_data;
             }
         }

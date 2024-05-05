@@ -32,6 +32,5 @@ public class Main {
         }
 
         // Final Result
-        System.out.println("\nFinal Data Value: " + BOOK.read());
     }
 }

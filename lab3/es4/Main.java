@@ -31,7 +31,5 @@ public class Main {
             Readers[i].join();
         }
 
-        // Final Result
-        System.out.println("\nFinal Data Value: " + BOOK.read());
     }
 }

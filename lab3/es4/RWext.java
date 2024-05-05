@@ -1,7 +1,7 @@
 public class RWext extends RWbasic {
     
     // Checks if it can be written
-    private boolean ready_to_update; 
+    private boolean ready_to_update = true; 
     
     // Return data
     @Override public int read() {
@@ -12,7 +12,7 @@ public class RWext extends RWbasic {
                 }
 
                 this.ready_to_update = true;
-                notify();
+                notifyAll();
                 return data;
             }
         } 
@@ -33,7 +33,7 @@ public class RWext extends RWbasic {
                 int cache_data = data;
                 cache_data++;
                 this.ready_to_update = false;
-                notify();
+                notifyAll();
                 data = cache_data;
             }
         }

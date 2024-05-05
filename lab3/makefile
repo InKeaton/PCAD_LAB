@@ -3,7 +3,7 @@ all: es1 es2 es3 es4
 es1: es1/*.java
 	javac es1/*.java
 
-es2: es2/*.java
+es2: es2/*.java 
 	javac es2/*.java
 
 es3: es3/*.java
