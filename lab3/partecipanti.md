@@ -1,5 +1,5 @@
-# PCAD - LAB 2
-## Semaphores and Buses
+# PCAD - LAB 3
+## Threads in Java
 ---
 
 I partecipanti a questo gruppo sono:
