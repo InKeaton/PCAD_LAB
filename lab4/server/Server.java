@@ -1,12 +1,21 @@
 import java.io.*;
 import java.net.*;
 
-public class Server {
+//##########################################// 
+// # SERVER                                 //
+//##########################################// 
+// + An object containing a FIFO structure. //
+// + Waits for TCP requests from Producers  //
+//   and Consumers to add or remove         //
+//   elements from the structure            //
+//##########################################//  
+
+public class Server implements Actor {
 	private ServerSocket server;
 	private final int default_port = 6969;
 
-	Server() 				 { this.ServerRun(this.default_port); }
-	Server(int port) { this.ServerRun(port); }
+	public Server()         { this.ServerRun(this.default_port); }
+	public Server(int port) { this.ServerRun(port); }
 
 	private void ServerRun(int run_port) {
 		try {
@@ -21,7 +30,7 @@ public class Server {
 				pw.flush();
 				br.close();
 				pw.close();
-				socket.close();
+				socket.close(); 
 			}
 		} catch(Exception e) {
 		

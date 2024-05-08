@@ -7,6 +7,6 @@
 //   will be added the the server structure //
 //##########################################//
 
-public class Consumer extends Client {
-    
+public class Consumer /* extends Client */ {
+
 }

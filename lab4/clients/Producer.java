@@ -7,7 +7,6 @@
 //   will be added the the server structure //
 //##########################################//
 
+public class Producer /* extends Client */ {
 
-public class Producer extends Client{
-    
 }

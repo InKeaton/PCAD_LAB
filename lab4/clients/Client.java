@@ -1,12 +1,19 @@
 import java.io.*;
 import java.net.*;
 
-public class Client {
+//##########################################// 
+// # CLIENT                                 //
+//##########################################// 
+// + An object wich sends TCP requests to   //
+//   a Server                               //
+//##########################################//  
+
+public class Client implements Actor {
 	private static int client_num = 0;
 	private int client_id;
 	private Socket client_socket = null;
 
-	Client(String msg) {
+	public Client(String msg) {
 		this.client_id = client_num++;
 		System.out.println("Creato il nuovo client numero: " + this.client_id);
 		this.Send(msg);
