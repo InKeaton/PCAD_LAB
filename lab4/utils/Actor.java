@@ -6,5 +6,6 @@
 //##########################################//  
 
 public interface Actor {
-    
+    void Snd();
+    void Rcv();
 }
