@@ -10,7 +10,6 @@
 import java.net.*;
 import java.io.*;
 
-
 /*
  	Per i clienti consumatore: dopo la connessione, il cliente manda un messaggio "consumer\n" poi aspetta un primo mes-
 	saggio dal server "okcons\n" e un altro messaggio senza carattere '\n' in mezzo che finisce con '\n' e chi corrisponde
@@ -26,7 +25,8 @@ public class Consumer  extends Client implements Runnable {
 	}	
 
 	public void run() {
-		
+		System.out.println("Start consumer thread");
+		this.Client_Life();
 	}
 
 }

@@ -8,10 +8,10 @@
 //##########################################//
 
 /*
-    per i clienti produttore: dopo la connessione, il cliente manda un messaggio "producer\n" (le aspice non fanno parte
-    dei messaggi) poi aspetta un messaggio dal server "okprod\n" e poi il cliente manda una string senza carattere '\n' in
-    mezzo che finisce con '\n' e si scollega. La string prodotta viene aggiunta ad una struttura FIFO dal server.
- */
+  per i clienti produttore: dopo la connessione, il cliente manda un messaggio "producer\n" (le aspice non fanno parte
+  dei messaggi) poi aspetta un messaggio dal server "okprod\n" e poi il cliente manda una string senza carattere '\n' in
+  mezzo che finisce con '\n' e si scollega. La string prodotta viene aggiunta ad una struttura FIFO dal server.
+*/
 
 public class Producer  extends Client implements Runnable {
     public Producer(int server_port) {
@@ -19,6 +19,7 @@ public class Producer  extends Client implements Runnable {
     }
 
     public void run() {
-      
+      System.out.println("Start producer thread");
+      this.Client_Life();
     }
 }
