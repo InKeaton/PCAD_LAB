@@ -15,7 +15,7 @@ public class Client implements Actor {
 	
 	private int client_id;
 	private Socket client_socket  = null;
-	private PrintWriter pw 			  = null;
+	private PrintWriter pw        = null;
 	private BufferedReader br     = null;
 	private String[] snd_string;
 	private String[] rcv_string;
@@ -61,7 +61,7 @@ public class Client implements Actor {
 
 	public void Client_Life() {
 		try {	
-			while(this.snd_msg_index < this.snd_string.length && this.rcv_msg_index < this.rcv_string.length) {
+			while(this.snd_msg_index < this.snd_string.length || this.rcv_msg_index < this.rcv_string.length) {
 				if(this.snd_msg_index < this.snd_string.length) {
 					this.Snd(); 
 					this.snd_msg_index++;
