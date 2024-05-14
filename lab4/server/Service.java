@@ -42,7 +42,9 @@ public class Service implements Runnable {
             System.out.println(msg);
             if (msg.equals("producer"))      { this.Producer(); }
             else if(msg.equals("consumer"))  { this.Consumer(); }
-            br.close();
+            // Close
+            this.br.close();
+            this.pw.close();
             this.socket.close();
         } catch(Exception exc) {
 
