@@ -10,27 +10,27 @@ import java.net.*;
 //   elements from the structure            //
 //##########################################//  
 
-public class Server implements Actor {
+public class Server {
+
 	private ServerSocket server;
 	private final int default_port = 6969;
 
-	public Server()         { this.ServerRun(this.default_port); }
+	public Server()         { this.ServerRun(this.default_port);}
 	public Server(int port) { this.ServerRun(port); }
 
 	private void ServerRun(int run_port) {
+		/*
+		 * Deve semplicemente accettare le connessioni 
+		 * con i client e avviare il thread del servizio 
+		 * per potergli rispondere
+		 */
 		try {
 			this.server = new ServerSocket(run_port);
 			while(true) {
 				Socket socket = this.server.accept();
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				PrintWriter pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-				String mess=br.readLine();
-				System.out.println("Receive message:" + mess);
-				pw.println("ECHO "+mess);
-				pw.flush();
-				br.close();
-				pw.close();
-				socket.close(); 
+				System.out.println("Hello");
+				Thread t = new Thread(new Service(socket));
+				t.start();
 			}
 		} catch(Exception e) {
 		
