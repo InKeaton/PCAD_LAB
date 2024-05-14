@@ -3,7 +3,7 @@ import java.util.*;
 public class MainClient {
 	
 	public static void main(String[] args) {
-		try{
+		try {
 			Thread t = new Thread(new Consumer(6969));
 			t.start();
 			t.join();
@@ -12,3 +12,5 @@ public class MainClient {
 		}
 	}
 }
+
+
