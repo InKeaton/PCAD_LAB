@@ -24,11 +24,15 @@ public class Server {
 		 * con i client e avviare il thread del servizio 
 		 * per potergli rispondere
 		 */
+		System.out.println("+--------------------------------------+");
+		System.out.println("+ Hello entrato nel server  :)         +");
+		System.out.println("+ Versione: 5.0.                       +");
+		System.out.println("+--------------------------------------+");
+		
 		try {
 			this.server = new ServerSocket(run_port);
 			while(true) {
 				Socket socket = this.server.accept();
-				System.out.println("Hello");
 				Thread t = new Thread(new Service(socket));
 				t.start();
 			}
