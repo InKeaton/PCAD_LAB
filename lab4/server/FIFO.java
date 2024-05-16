@@ -23,7 +23,7 @@ public class FIFO {
         try {
             while(this.data.size() == 0) {  wait(); }
         }   catch(Exception e) { }
-        return this.data.removeLast();
+        return this.data.removeFirst();
     } 
       
 }; 
