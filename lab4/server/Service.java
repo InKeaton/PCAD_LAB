@@ -39,7 +39,6 @@ public class Service implements Runnable {
             pw.flush();
             System.out.println("P--> Messaggio inviato okprod");
             while (((rcv = br.readLine()) == null) || !(rcv.equals("oggetto"))){}
-            System.out.println("P--> Entra nella ADD");
             Service.stack.Add(rcv);
             System.out.println("P--> Ricevuto il msg dal producer :)");
 
