@@ -9,7 +9,7 @@
 import java.io.*;
 import java.net.*;
 
-public class Client implements Actor {
+public class Client  {
 	//Attributi
 	private static int client_num = 0;
 	
@@ -52,7 +52,7 @@ public class Client implements Actor {
 		try {
 			String rcv;
 			System.out.println("Client: " + this.client_id + " recv");
-			rcv = br.readLine();
+			while(((rcv = br.readLine()) == null) || !(rcv.equals(this.rcv_string[this.rcv_msg_index]))) {}
 			System.out.println("Ricevuto msg: " + rcv);
 		} catch (Exception e) {
 			System.out.println("Client RCV Exception: " + e.getMessage());

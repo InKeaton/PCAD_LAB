@@ -15,7 +15,7 @@
 
 public class Producer  extends Client implements Runnable {
     public Producer(int server_port) {
-      super(server_port,  new String[] {"producer\n", "oggetto\n"}, new String[] {"okprod\n"});
+      super(server_port,  new String[] {"producer", "oggetto"}, new String[] {"okprod"});
     }
 
     public void run() {
