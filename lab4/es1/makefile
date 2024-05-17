@@ -1,10 +1,10 @@
 all: clients server
 
-clients: utils/*.java clients/*.java
-	javac utils/*.java clients/*.java
+clients: clients/*.java
+	javac clients/*.java
 
-server:  utils/*.java server/*.java
-	javac utils/*.java server/*.java
+server:  server/*.java
+	javac server/*.java
 
 clear:
 	rm -r */*.class

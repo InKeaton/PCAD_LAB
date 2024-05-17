@@ -5,7 +5,7 @@ public class MainClient {
 	
 	public static void main(String[] args) {
 		try {
-			int numProd = 100, numCons = 101;
+			int numProd = 100, numCons = 100;
 			Thread[] tP = new Thread[numProd];
 			Thread[] tC = new Thread[numCons];
 			for(int i = 0; i < tP.length; i++) {
