@@ -27,7 +27,11 @@ public class FIFO {
     public synchronized String Pop() {
         String return_val = "";
         try {
+            // FOR JAVA =>19
             return_val = this.data.removeFirst();
+            // FOR JAVA <19
+            // return_val = this.data.get(0);
+            // this.data.remove(0);
             if(this.data.size() == this.numel-1) { notifyAll();}
             while(this.data.size() == 0) {  wait(); }
         }   catch(Exception e) { }

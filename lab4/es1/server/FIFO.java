@@ -23,9 +23,14 @@ public class FIFO {
         try {
             while(this.data.size() == 0) {  wait(); }
         }   catch(Exception e) { }
-        var tmp = this.data.get(0);
-        this.data.remove(0);
-        return tmp;
+
+        // FOR JAVA =>19
+        return this.data.removeFirst();
+
+        // FOR JAVA <19
+        // var tmp = this.data.get(0);
+        // this.data.remove(0);
+        // return tmp;
     } 
       
 }; 

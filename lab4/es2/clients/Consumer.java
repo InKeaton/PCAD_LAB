@@ -21,7 +21,7 @@ import java.io.*;
 public class Consumer  extends Client implements Runnable {
 
 	public Consumer(int server_port) {
-		super(server_port,  new String[] {"consumer"}, new String[] {"okcons", "oggetto", ""});
+		super(server_port,  new String[] {"consumer"}, new String[] {"okcons", "oggetto" , ""});
 	}	
 
 	public void run() {
