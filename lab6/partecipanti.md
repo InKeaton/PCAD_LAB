@@ -1,5 +1,5 @@
 # PCAD - LAB 6
-## Una Sveglia per Babbo Natale
+## Giornata Tipo al Polo Nord
 ---
 
 I partecipanti a questo gruppo sono:
